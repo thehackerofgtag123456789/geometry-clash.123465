@@ -3,107 +3,40 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Geometry Clash</title>
+<title>Geometry Clash — Remake</title>
 <style>
   :root{
-    --bg:#071127;
-    --panel:#0d1726;
-    --accent:#ffd166;
+    --bg-start:#050814;
+    --bg-end:#081428;
+    --panel:#0b2030;
+    --accent:#7ef2b8;
+    --neon-pink: #ff00ff;
     --muted:#9fb0c8;
-    --danger:#ff6b6b;
   }
-  html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;}
+  html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
   body{
     display:flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(180deg,var(--bg),#041028);
+    background:linear-gradient(180deg,var(--bg-start),var(--bg-end));
     color:#e6f0fb;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
   }
-
-  .wrap{
-    width:100%;
-    max-width:1000px;
-    padding:18px;
-    box-sizing:border-box;
-  }
-
-  header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    margin-bottom:12px;
-  }
-  .title{
-    font-weight:700;
-    font-size:20px;
-    letter-spacing:0.6px;
-    display:flex;
-    gap:12px;
-    align-items:center;
-  }
-  .title .logo{
-    width:34px;height:34px;border-radius:6px;background:linear-gradient(135deg,var(--accent),#ff8a7a);display:flex;align-items:center;justify-content:center;color:#071127;font-weight:800;font-family:monospace;
-  }
-
+  .wrap{width:100%;max-width:1100px;padding:18px;box-sizing:border-box}
+  header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+  .title{display:flex;gap:12px;align-items:center;font-weight:800}
+  .logo{width:42px;height:42px;border-radius:8px;background:linear-gradient(135deg,#ffd166,#ff8a7a);display:flex;align-items:center;justify-content:center;font-weight:900;color:#081428;font-family:monospace}
   .controls{display:flex;gap:8px;align-items:center}
-  button{
-    background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:pointer;
-  }
-  button.primary{
-    background:linear-gradient(90deg,var(--accent),#ff8a7a);
-    color:#071127;border:none;font-weight:700;
-  }
-  .stats{font-size:14px;color:var(--muted);}
-
-  .panel{
-    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-radius:12px;
-    padding:12px;
-    box-shadow: 0 6px 24px rgba(2,6,23,0.6);
-  }
-
-  /* canvas container */
-  .game-area{
-    position:relative;
-    width:100%;
-    height:560px;
-    max-height:70vh;
-    overflow:hidden;
-    border-radius:10px;
-    margin-top:12px;
-    touch-action:none;
-  }
-  canvas{
-    width:100%;
-    height:100%;
-    display:block;
-    background:
-      linear-gradient(0deg, rgba(255,255,255,0.01), transparent 30%),
-      radial-gradient(800px 200px at 10% 10%, rgba(255,255,255,0.01), transparent 20%),
-      var(--panel);
-    border-radius:10px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
-  }
-  .overlay{
-    position:absolute;left:12px;top:12px;color:#e6eef8;font-weight:700;
-    display:flex;gap:12px;align-items:center;
-  }
-  .big-score{position:absolute;right:18px;top:18px;font-size:22px;font-weight:800;color:var(--accent)}
-  .center-message{
-    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-    text-align:center;color:rgba(230,238,251,0.92);
-  }
-  .center-message small{display:block;color:var(--muted);margin-top:8px}
-
-  footer{margin-top:10px;font-size:13px;color:var(--muted)}
-  @media (max-width:600px){
-    .title{font-size:16px}
-    .game-area{height:420px}
-  }
+  button{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:pointer}
+  button.primary{background:linear-gradient(90deg,var(--accent),#61c5ff);color:#041428;border:none;font-weight:700}
+  .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:12px;box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+  .game-area{position:relative;width:100%;height:620px;max-height:74vh;overflow:hidden;border-radius:10px;touch-action:none}
+  canvas{width:100%;height:100%;display:block;border-radius:8px;background:radial-gradient(800px 200px at 10% 10%, rgba(255,255,255,0.02), transparent 10%), var(--panel)}
+  .hud{position:absolute;left:14px;top:14px;font-weight:800}
+  .big-score{position:absolute;right:18px;top:18px;font-size:22px;font-weight:900;color:var(--accent)}
+  .center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;color:#e6eef8}
+  .center small{display:block;color:var(--muted);margin-top:8px}
+  footer{margin-top:10px;color:var(--muted);font-size:13px}
+  @media (max-width:600px){ .game-area{height:460px} .title{font-size:16px} }
 </style>
 </head>
 <body>
@@ -112,13 +45,13 @@
       <div class="title">
         <div class="logo">GC</div>
         <div>
-          Geometry Clash
-          <div style="font-size:12px;color:var(--muted);font-weight:600">A tiny Geometry Dash–style clone</div>
+          Geometry Clash — Remake
+          <div style="font-size:12px;color:var(--muted);font-weight:600">Neon spikes & crisp controls</div>
         </div>
       </div>
 
       <div class="controls">
-        <div class="stats">Best: <span id="best">0</span></div>
+        <div style="font-size:14px;color:var(--muted)">Best: <span id="best">0</span></div>
         <button id="muteBtn" title="Mute / unmute">🔊</button>
         <button id="pauseBtn">Pause</button>
         <button id="restartBtn" class="primary">Restart</button>
@@ -127,36 +60,32 @@
 
     <div class="panel">
       <div class="game-area" id="gameArea" aria-label="Geometry Clash game area">
-        <canvas id="gameCanvas" width="1200" height="700"></canvas>
-        <div class="overlay">
-          <div>Tap / Click / Space — jump</div>
-        </div>
+        <canvas id="gameCanvas" width="1400" height="800"></canvas>
+
+        <div class="hud">Tap / Click / Space — jump & hold to dash</div>
         <div class="big-score" id="scoreDisplay">0</div>
-        <div class="center-message" id="centerMsg" style="display:none">
-          <div id="centerMain" style="font-size:22px;font-weight:800">Paused</div>
-          <small id="centerSub">Press Space or Tap to play</small>
+
+        <div class="center" id="centerMsg" style="display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:auto">
+          <div id="centerMain" style="font-size:26px;font-weight:900">Get Ready</div>
+          <small id="centerSub">Tap / Click / Space to start</small>
         </div>
       </div>
-      <footer>
-        Controls: Tap / Click / Space to jump. Hold jump to dash (short glide). Built-in sounds (WebAudio). High score saved locally.
-      </footer>
+
+      <footer>Controls: Tap / Click / Space to jump. Hold to dash/glide. Neon spikes glow. High scores saved locally.</footer>
     </div>
   </div>
 
 <script>
-/*
- Geometry Clash - single-file clone
- - Player square auto-runs left-to-right on a 2D plane
- - Tap/click/space to jump; hold to dash/glide (slower fall)
- - Procedural obstacles (rectangles + spikes)
- - Score increases with distance; stored highscore in localStorage
- - Small WebAudio synth for jump/hit/score sounds
+/* Geometry Clash — Remake
+   Single-file HTML5 canvas game
+   - neon pink glowing spikes
+   - tighter physics, more obstacle variety
+   - mobile-friendly, localStorage high score
 */
 
-// Canvas + resize
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-const gameArea = document.getElementById('gameArea');
+const area = document.getElementById('gameArea');
 const scoreDisplay = document.getElementById('scoreDisplay');
 const bestEl = document.getElementById('best');
 const centerMsg = document.getElementById('centerMsg');
@@ -166,184 +95,197 @@ const pauseBtn = document.getElementById('pauseBtn');
 const restartBtn = document.getElementById('restartBtn');
 const muteBtn = document.getElementById('muteBtn');
 
-let DPR = window.devicePixelRatio || 1;
-function resizeCanvas(){
-  const rect = gameArea.getBoundingClientRect();
-  canvas.style.width = rect.width + 'px';
-  canvas.style.height = rect.height + 'px';
-  canvas.width = Math.floor(rect.width * DPR);
-  canvas.height = Math.floor(rect.height * DPR);
+let DPR = Math.max(1, window.devicePixelRatio || 1);
+function resize(){
+  const r = area.getBoundingClientRect();
+  canvas.style.width = r.width + 'px';
+  canvas.style.height = r.height + 'px';
+  canvas.width = Math.round(r.width * DPR);
+  canvas.height = Math.round(r.height * DPR);
   ctx.setTransform(DPR,0,0,DPR,0,0);
 }
-window.addEventListener('resize', () => { DPR = window.devicePixelRatio || 1; resizeCanvas(); });
-resizeCanvas();
+window.addEventListener('resize', ()=>{ DPR = Math.max(1, window.devicePixelRatio || 1); resize(); });
+resize();
 
-// Game state
-let running = false;
-let paused = false;
-let mute = false;
+// game state
+let running = false, paused = false, mute = false;
 let lastTs = 0;
-let speed = 320; // pixels/sec world speed
+let worldSpeed = 380; // px/s baseline
 let distance = 0;
 let score = 0;
 let best = parseInt(localStorage.getItem('gc_best') || '0', 10);
 bestEl.textContent = best;
 
-// Audio
+// audio (tiny synth)
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
-const audioCtx = new (AudioCtx || function(){})();
-function playTone(freq=440, type='sine', time=0.02, gain=0.12){
-  if(mute || !audioCtx || !audioCtx.createOscillator) return;
+const audioCtx = (typeof AudioCtx !== 'undefined') ? new AudioCtx() : null;
+function playTone(freq=440, type='sine', dur=0.08, vol=0.08){
+  if(mute || !audioCtx) return;
   try{
     const o = audioCtx.createOscillator();
     const g = audioCtx.createGain();
     o.type = type;
     o.frequency.value = freq;
-    g.gain.value = gain;
-    o.connect(g);
-    g.connect(audioCtx.destination);
+    g.gain.value = vol;
+    o.connect(g); g.connect(audioCtx.destination);
     o.start();
-    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + time);
-    o.stop(audioCtx.currentTime + time + 0.02);
-  }catch(e){/*ignore*/ }
+    g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
+    o.stop(audioCtx.currentTime + dur + 0.02);
+  }catch(e){}
 }
-function playHit(){ playTone(120, 'square', 0.15, 0.18); }
-function playJump(){ playTone(720, 'sine', 0.12, 0.14); }
-function playPoint(){ playTone(1100, 'sine', 0.08, 0.06); }
+function sJump(){ playTone(760,'sine',0.12,0.12); }
+function sHit(){ playTone(140,'square',0.18,0.18); }
+function sPoint(){ playTone(1100,'sine',0.06,0.05); }
 
-// Player
+// player
 const player = {
-  x: 140, // local position on screen (fixed visual)
+  x: 160,
   y: 0,
-  w: 36,
-  h: 36,
+  w: 40,
+  h: 40,
   vy: 0,
-  onGround: false,
-  color: '#ffd166',
-  gravity: 1700,
-  jumpSpeed: -640,
-  dashFactor: 0.45
+  gravity: 2100,
+  jumpVel: -720,
+  dashFactor: 0.5,
+  color: '#7ef2b8'
 };
 
-// World & obstacles
+// world
 let obstacles = [];
 let spawnTimer = 0;
-let spawnInterval = 1.1; // seconds (will decrease)
+let spawnInterval = 1.05;
 let difficultyTimer = 0;
 
-// Input
+// input
 let pointerDown = false;
 let holdStart = 0;
 
-// Utility rand
-function rand(min, max){ return Math.random()*(max-min)+min; }
+// util
+const rand = (a,b) => Math.random()*(b-a)+a;
 
-// Reset game
+// reset
 function resetGame(){
   obstacles = [];
   spawnTimer = 0;
-  spawnInterval = 1.1;
+  spawnInterval = 1.05;
   difficultyTimer = 0;
-  speed = 320;
+  worldSpeed = 360;
   distance = 0;
   score = 0;
-  player.y = canvas.height / DPR - 120; // will adjust to ground in init
   player.vy = 0;
-  player.onGround = false;
-  centerMsg.style.display = 'flex';
-  centerMain.textContent = 'Get Ready';
-  centerSub.textContent = 'Tap / Click / Space to start';
+  player.y = (canvas.height/DPR) - 140 - player.h; // place on ground
   running = false;
   paused = false;
   lastTs = 0;
+  centerMsg.style.display = 'flex';
+  centerMain.textContent = 'Get Ready';
+  centerSub.textContent = 'Tap / Click / Space to start';
   updateScoreUI();
 }
 
-// Spawn obstacle function
-function spawnObstacle(){
-  // types: block, spike
-  const type = Math.random() < 0.26 ? 'spike' : 'block';
-  const gap = rand(160, 270) - Math.min(120, Math.floor(distance/200)); // space
-  const h = type === 'block' ? rand(28, 120) : 36;
-  const yFromBottom = type === 'block' ? rand(0, 80) : 0;
-  const w = type === 'block' ? rand(26, 64) : 46;
-  const startX = canvas.width / DPR + 100;
-  obstacles.push({
-    x: startX,
-    w: w,
-    h: h,
-    type: type,
-    y: canvas.height / DPR - 80 - yFromBottom - (type === 'block' ? h : 36),
-    passed: false
-  });
+// obstacle generator (blocks, tall, low, spikes, double)
+function spawnObstaclePattern(){
+  const W = canvas.width / DPR;
+  const patternType = Math.random();
+  if(patternType < 0.12){
+    // double low blocks with narrow gap
+    const gap = rand(140, 180);
+    const h = rand(28,48);
+    obstacles.push(makeBlock(W + 0, 64, h, false));
+    obstacles.push(makeBlock(W + 0 + gap + 40, 64, h, false));
+  } else if(patternType < 0.30){
+    // tall block
+    obstacles.push(makeBlock(W, rand(36,120), null, false));
+  } else if(patternType < 0.52){
+    // spike field
+    obstacles.push(makeSpike(W, rand(80,150)));
+  } else if(patternType < 0.78){
+    // single wide block
+    obstacles.push(makeBlock(W, rand(40,90), null, false));
+  } else {
+    // a low platform + spike after
+    obstacles.push(makeBlock(W, rand(20,36), 40, false));
+    obstacles.push(makeSpike(W + rand(220,320), rand(70,130)));
+  }
 }
 
-// Physics step
-function step(dt){
-  if(paused || !running) return;
+function makeBlock(x, h=null, yFromBottom=null, isMoving=false){
+  const H = canvas.height / DPR;
+  const hh = h || rand(28, 110);
+  const yfb = (typeof yFromBottom === 'number') ? yFromBottom : rand(0, 76);
+  const y = H - 80 - hh - yfb;
+  const w = rand(28, 76);
+  return { type:'block', x:x, w:w, h:hh, y:y, passed:false, moving:isMoving };
+}
+function makeSpike(x, width=92){
+  const H = canvas.height / DPR;
+  const h = 36;
+  const y = H - 80 - h;
+  return { type:'spike', x:x, w:Math.max(40,width), h:h, y:y, passed:false };
+}
 
-  // increase difficulty slightly
-  difficultyTimer += dt;
-  if(difficultyTimer > 5){
-    difficultyTimer = 0;
-    spawnInterval = Math.max(0.6, spawnInterval - 0.04);
-    speed += 12;
-  }
-
-  // spawn obstacles
+// spawn wrapper
+function trySpawn(dt){
   spawnTimer -= dt;
   if(spawnTimer <= 0){
-    spawnObstacle();
-    spawnTimer = spawnInterval;
+    spawnTimer = spawnInterval + rand(-0.15, 0.25);
+    // spawn 1-2 obstacles
+    const count = Math.random() < 0.14 ? 2 : 1;
+    for(let i=0;i<count;i++){
+      spawnObstaclePattern();
+    }
+  }
+}
+
+// physics & world step
+function step(dt){
+  if(!running || paused) return;
+
+  difficultyTimer += dt;
+  if(difficultyTimer > 4.5){
+    difficultyTimer = 0;
+    spawnInterval = Math.max(0.55, spawnInterval - 0.03);
+    worldSpeed += 10;
   }
 
-  // move obstacles
-  for(let i = obstacles.length -1; i >= 0; i--){
-    const ob = obstacles[i];
-    ob.x -= speed * dt;
-    // mark passed
-    if(!ob.passed && ob.x + ob.w < player.x){
-      ob.passed = true;
-      score += 10;
-      playPoint();
+  trySpawn(dt);
+
+  // move obstacles & scoring
+  for(let i=obstacles.length-1;i>=0;i--){
+    const o = obstacles[i];
+    o.x -= worldSpeed * dt;
+    if(!o.passed && o.x + o.w < player.x){
+      o.passed = true;
+      score += 12;
+      sPoint();
       if(score > best){ best = score; localStorage.setItem('gc_best', String(best)); bestEl.textContent = best; }
       updateScoreUI();
     }
-    // remove off-screen
-    if(ob.x + ob.w < -200) obstacles.splice(i,1);
+    if(o.x + o.w < -200) obstacles.splice(i,1);
   }
 
-  // integrate player
+  // player physics
   player.vy += player.gravity * dt;
   player.y += player.vy * dt;
 
-  // floor collision (ground at canvas.height/DPR - 80)
-  const groundY = canvas.height / DPR - 80 - player.h;
-  if(player.y > groundY){
-    player.y = groundY;
-    player.vy = 0;
-    player.onGround = true;
-  }else{
-    player.onGround = false;
-  }
+  const groundY = (canvas.height / DPR) - 80 - player.h;
+  if(player.y > groundY){ player.y = groundY; player.vy = 0; }
 
-  // distance & scoring (continuous)
-  distance += speed * dt;
-  scoreDisplay.textContent = Math.floor(distance / 10 + score);
+  // continuous distance-based score display
+  distance += worldSpeed * dt;
+  scoreDisplay.textContent = Math.floor(distance / 12 + score);
 
-  // collision check
+  // collisions
   for(const ob of obstacles){
     if(ob.type === 'block'){
       if(rectsOverlap(player.x, player.y, player.w, player.h, ob.x, ob.y, ob.w, ob.h)){
-        // hit
-        doGameOver();
+        gameOver();
         return;
       }
-    }else if(ob.type === 'spike'){
-      // simple triangular spike collision area approximation: use rect for simplicity
-      const spikeRect = {x: ob.x, y: ob.y, w: ob.w, h: ob.h};
-      if(rectsOverlap(player.x, player.y, player.w, player.h, spikeRect.x, spikeRect.y, spikeRect.w, spikeRect.h)){
-        doGameOver();
+    } else if(ob.type === 'spike'){
+      // detect with rectangle (conservative)
+      if(rectsOverlap(player.x, player.y, player.w, player.h, ob.x, ob.y, ob.w, ob.h)){
+        gameOver();
         return;
       }
     }
@@ -354,155 +296,181 @@ function rectsOverlap(ax,ay,aw,ah,bx,by,bw,bh){
   return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
 }
 
-// Game over
-function doGameOver(){
+// game over
+function gameOver(){
   running = false;
   centerMsg.style.display = 'flex';
   centerMain.textContent = 'You Crashed';
-  centerSub.textContent = 'Click / Space to restart';
-  playHit();
-  // update highscore (already done during run)
+  centerSub.textContent = 'Tap / Click / Space to restart';
+  sHit();
   if(score > best){ best = score; localStorage.setItem('gc_best', String(best)); bestEl.textContent = best; }
   updateScoreUI();
 }
 
-// Draw
+// drawing helpers
+function roundRectPath(x,y,w,h,r){
+  const rr = r || 6;
+  ctx.beginPath();
+  ctx.moveTo(x+rr,y);
+  ctx.arcTo(x+w,y,x+w,y+h,rr);
+  ctx.arcTo(x+w,y+h,x,y+h,rr);
+  ctx.arcTo(x,y+h,x,y,rr);
+  ctx.arcTo(x,y,x+w,y,rr);
+  ctx.closePath();
+}
+
 function draw(){
-  // clear
   const W = canvas.width / DPR, H = canvas.height / DPR;
+  // clear
   ctx.clearRect(0,0,W,H);
 
-  // background grid subtle
-  const grad = ctx.createLinearGradient(0,0,0,H);
-  grad.addColorStop(0, 'rgba(0,0,0,0.06)');
-  grad.addColorStop(1, 'rgba(0,0,0,0.0)');
-  ctx.fillStyle = grad;
-  ctx.fillRect(0,0,W,H);
+  // background subtle vignette
+  const bgGrad = ctx.createLinearGradient(0,0,0,H);
+  bgGrad.addColorStop(0, 'rgba(255,255,255,0.01)');
+  bgGrad.addColorStop(1, 'rgba(0,0,0,0.06)');
+  ctx.fillStyle = bgGrad; ctx.fillRect(0,0,W,H);
+
+  // parallax shapes (decor)
+  ctx.save();
+  ctx.globalAlpha = 0.06;
+  for(let i=0;i<6;i++){
+    const sx = ((distance/50 + i*200) % (W+200)) - 100;
+    const sy = 40 + (i%3)*40;
+    ctx.beginPath();
+    ctx.ellipse(sx, sy, 120, 40, 0, 0, Math.PI*2);
+    ctx.fillStyle = '#9fead4';
+    ctx.fill();
+  }
+  ctx.restore();
 
   // ground
-  ctx.fillStyle = '#0c2336';
+  ctx.fillStyle = '#071b2a';
   ctx.fillRect(0,H-80,W,80);
-  // ground highlight
+  // subtle highlight
   ctx.fillStyle = 'rgba(255,255,255,0.02)';
-  ctx.fillRect(0,H-80,W,4);
+  ctx.fillRect(0,H-84,W,4);
 
-  // obstacles
+  // draw obstacles
   for(const ob of obstacles){
     if(ob.type === 'block'){
       // shadow
-      ctx.fillStyle = 'rgba(0,0,0,0.22)';
-      ctx.fillRect(ob.x+6, ob.y+6, ob.w, ob.h);
-      // body
-      ctx.fillStyle = '#7bd389';
-      roundRect(ctx, ob.x, ob.y, ob.w, ob.h, 6);
-    }else if(ob.type === 'spike'){
-      // draw triangular spikes
+      ctx.fillStyle = 'rgba(0,0,0,0.25)';
+      ctx.fillRect(ob.x + 6, ob.y + 6, ob.w, ob.h);
+      // block body gradient
+      const g = ctx.createLinearGradient(0, ob.y, 0, ob.y + ob.h);
+      g.addColorStop(0, '#4fe5b9');
+      g.addColorStop(1, '#2fb18d');
+      ctx.fillStyle = g;
+      roundRectPath(ob.x, ob.y, ob.w, ob.h, 8);
+      ctx.fill();
+
+      // edge light
+      ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+      ctx.lineWidth = 1;
+      roundRectPath(ob.x + 0.5, ob.y + 0.5, ob.w - 1, ob.h - 1, 8);
+      ctx.stroke();
+
+    } else if(ob.type === 'spike'){
+      // neon-pink spikes with glow
       const spikeW = ob.w;
-      const spikeCount = Math.max(1, Math.round(spikeW / 16));
+      const spikeCount = Math.max(1, Math.round(spikeW / 14));
       const single = spikeW / spikeCount;
+
+      // shadow for spikes cluster
+      ctx.fillStyle = 'rgba(0,0,0,0.22)';
+      ctx.fillRect(ob.x + 6, ob.y + 8, ob.w, ob.h);
+
       for(let i=0;i<spikeCount;i++){
-        const sx = ob.x + i*single;
+        const sx = ob.x + i * single;
+
+        // Glow: set shadow first
+        ctx.save();
+        ctx.shadowColor = 'rgba(255,0,255,0.95)';       // neon pink glow
+        ctx.shadowBlur = 20;
+        // inner fill (bright core)
         ctx.beginPath();
         ctx.moveTo(sx, ob.y + ob.h);
-        ctx.lineTo(sx + single/2, ob.y);
+        ctx.lineTo(sx + single/2, ob.y + 2);            // slightly inset to reduce pointiness
         ctx.lineTo(sx + single, ob.y + ob.h);
         ctx.closePath();
-        ctx.fillStyle = '#ff6b6b';
+        ctx.fillStyle = '#ff00ff';                     // neon core
         ctx.fill();
+
+        // add a lighter highlight near the top of spike
+        ctx.shadowBlur = 0; // avoid glowing the highlight too
+        ctx.globalAlpha = 0.75;
+        ctx.beginPath();
+        ctx.moveTo(sx + single*0.2, ob.y + ob.h*0.6);
+        ctx.lineTo(sx + single/2, ob.y + 2);
+        ctx.lineTo(sx + single*0.8, ob.y + ob.h*0.6);
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(255,255,255,0.12)';
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.restore();
       }
     }
   }
 
   // player shadow
   ctx.fillStyle = 'rgba(0,0,0,0.22)';
-  ctx.fillRect(player.x + 6, player.y + 6, player.w, player.h);
+  ctx.fillRect(player.x + 8, player.y + 8, player.w, player.h);
 
-  // player
-  roundRect(ctx, player.x, player.y, player.w, player.h, 6);
+  // player box
+  roundRectPath(player.x, player.y, player.w, player.h, 8);
   ctx.fillStyle = player.color;
   ctx.fill();
 
-  // HUD (score handled outside)
+  // player rim
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  roundRectPath(player.x + 0.5, player.y + 0.5, player.w - 1, player.h - 1, 8);
+  ctx.stroke();
 }
 
-function roundRect(ctx,x,y,w,h,r){
-  ctx.beginPath();
-  ctx.moveTo(x+r,y);
-  ctx.arcTo(x+w,y,x+w,y+h,r);
-  ctx.arcTo(x+w,y+h,x,y+h,r);
-  ctx.arcTo(x,y+h,x,y,r);
-  ctx.arcTo(x,y,x+w,y,r);
-  ctx.closePath();
-}
-
-// Input handlers
+// input handling
 function startHold(){
   pointerDown = true;
   holdStart = performance.now();
 }
-
 function endHold(){
   pointerDown = false;
-  const held = (performance.now() - holdStart) / 1000;
+  const held = (performance.now() - holdStart)/1000;
   if(!running){
-    // start or restart play
-    running = true;
-    paused = false;
+    // start play
+    running = true; paused = false;
     centerMsg.style.display = 'none';
     lastTs = performance.now();
-    // small initial jump if the user pressed
-    player.vy = player.jumpSpeed * 0.96;
-    player.onGround = false;
-    playJump();
+    player.vy = player.jumpVel * 0.92;
+    sJump();
     return;
   }
-  // if on ground -> jump
-  if(player.onGround){
-    player.vy = player.jumpSpeed;
-    player.onGround = false;
-    playJump();
+  if(player.y >= (canvas.height/DPR) - 80 - player.h - 0.5){
+    // on ground -> jump
+    player.vy = player.jumpVel;
+    sJump();
   } else {
-    // if airborne and held briefly, apply dash/glide (reduce fall speed)
-    if(held > 0.08){
-      player.vy *= player.dashFactor;
-    }
+    // air dash/glide
+    if(held > 0.08) player.vy *= player.dashFactor;
   }
 }
 
-// pointer events
-gameArea.addEventListener('pointerdown', (e)=>{ e.preventDefault(); startHold(); });
-gameArea.addEventListener('pointerup', (e)=>{ e.preventDefault(); endHold(); });
-gameArea.addEventListener('pointercancel', (e)=>{ e.preventDefault(); endHold(); });
-gameArea.addEventListener('pointerleave', (e)=>{ /*ignore*/ });
+// pointer
+area.addEventListener('pointerdown', (e)=>{ e.preventDefault(); startHold(); }, {passive:false});
+area.addEventListener('pointerup', (e)=>{ e.preventDefault(); endHold(); }, {passive:false});
+area.addEventListener('pointercancel', (e)=>{ endHold(); });
 
 // keyboard
 window.addEventListener('keydown', (e)=>{
-  if(e.code === 'Space'){
-    e.preventDefault();
-    if(!running){
-      endHold();
-      return;
-    }
-    if(paused){
-      togglePause();
-      return;
-    }
-    // start holding
-    if(!pointerDown){ startHold(); }
-  }
-  if(e.code === 'KeyM'){ toggleMute(); }
-  if(e.code === 'KeyP'){ togglePause(); }
+  if(e.code === 'Space'){ e.preventDefault(); if(!pointerDown) startHold(); }
+  if(e.code === 'KeyM') toggleMute();
+  if(e.code === 'KeyP') togglePause();
 });
-window.addEventListener('keyup', (e)=>{
-  if(e.code === 'Space'){
-    e.preventDefault();
-    endHold();
-  }
-});
+window.addEventListener('keyup', (e)=>{ if(e.code === 'Space'){ e.preventDefault(); endHold(); } });
 
-// pause/restart/mute handlers
+// controls
 pauseBtn.addEventListener('click', togglePause);
-restartBtn.addEventListener('click', ()=>{ resetGame(); });
+restartBtn.addEventListener('click', resetGame);
 muteBtn.addEventListener('click', toggleMute);
 
 function togglePause(){
@@ -513,22 +481,18 @@ function togglePause(){
   centerSub.textContent = paused ? 'Press Space or Tap to resume' : '';
   pauseBtn.textContent = paused ? 'Resume' : 'Pause';
 }
-function toggleMute(){
-  mute = !mute;
-  muteBtn.textContent = mute ? '🔈' : '🔊';
-  if(!mute && audioCtx && audioCtx.state === 'suspended'){ audioCtx.resume && audioCtx.resume(); }
-}
+function toggleMute(){ mute = !mute; muteBtn.textContent = mute ? '🔈' : '🔊'; if(!mute && audioCtx && audioCtx.state === 'suspended') audioCtx.resume(); }
 
-// Score UI
+// update UI
 function updateScoreUI(){
-  scoreDisplay.textContent = Math.floor(distance / 10 + score);
+  scoreDisplay.textContent = Math.floor(distance / 12 + score);
   bestEl.textContent = best;
 }
 
-// Main loop
+// main loop
 function loop(ts){
   if(!lastTs) lastTs = ts;
-  const dt = Math.min(0.032, (ts - lastTs) / 1000);
+  const dt = Math.min(0.032, (ts - lastTs)/1000);
   lastTs = ts;
 
   if(running && !paused){
@@ -538,56 +502,31 @@ function loop(ts){
   requestAnimationFrame(loop);
 }
 
-// Kickoff
+// prefill obstacles for immediate variety
+function prefill(){
+  const W = canvas.width / DPR;
+  for(let i=0;i<4;i++){
+    const x = W + i * rand(160, 280);
+    if(Math.random() < 0.3) obstacles.push(makeSpike(x, rand(80,160)));
+    else obstacles.push(makeBlock(x, rand(28,120), null, false));
+  }
+}
+prefill();
+
+// start
 resetGame();
 requestAnimationFrame(loop);
 
-// allow starting with click on center message
-centerMsg.addEventListener('pointerdown', (e) => {
-  if(!running){
-    running = true;
-    centerMsg.style.display = 'none';
-    lastTs = performance.now();
-    // small hop to start
-    player.vy = player.jumpSpeed * 0.8;
-    playJump();
-  }
-});
+// start on center click
+centerMsg.addEventListener('pointerdown', (e)=>{ e.preventDefault(); if(!running){ running = true; centerMsg.style.display = 'none'; lastTs = performance.now(); player.vy = player.jumpVel * 0.92; sJump(); } });
 
-// accessibility: restart on double click
-gameArea.addEventListener('dblclick', ()=>{ resetGame(); });
-
-// small keyboard help
-window.addEventListener('blur', ()=>{ pointerDown = false; });
-
-/* Ensure player is positioned on ground when canvas resizes */
-window.addEventListener('resize', ()=>{
-  player.y = Math.min(player.y, canvas.height / DPR - 80 - player.h);
-});
-
-/* Pre-populate a few obstacles to avoid blank start when running fast */
-function prefillObstacles(){
-  const W = canvas.width / DPR;
-  for(let i=0;i<3;i++){
-    const base = W + i*160 + rand(0,200);
-    obstacles.push({
-      x: base,
-      w: rand(26, 64),
-      h: rand(24, 120),
-      type: Math.random() < 0.22 ? 'spike' : 'block',
-      y: canvas.height / DPR - 80 - (Math.random() < 0.22 ? 36 : rand(24,120))
-    });
-  }
+// auto-resume audio on first gesture for browsers that block autoplay
+function resumeAudioOnGesture(){
+  function r(){ if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume(); window.removeEventListener('pointerdown', r); window.removeEventListener('keydown', r); }
+  window.addEventListener('pointerdown', r);
+  window.addEventListener('keydown', r);
 }
-prefillObstacles();
-
-// small resume audio on first user interaction (some browsers block autoplay)
-function resumeAudioOnFirstGesture(){
-  function resume(){ if(audioCtx && audioCtx.state === 'suspended'){ audioCtx.resume(); } window.removeEventListener('pointerdown', resume); window.removeEventListener('keydown', resume); }
-  window.addEventListener('pointerdown', resume);
-  window.addEventListener('keydown', resume);
-}
-resumeAudioOnFirstGesture();
+resumeAudioOnGesture();
 
 </script>
 </body>
